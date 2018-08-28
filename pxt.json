@@ -4,7 +4,7 @@
         "core": "*",
         "radio": "*"
     },
-    "description": "",
+    "description": "MakeCode Package for the OC05 xChip",
     "files": [
         "main.blocks",
         "oc05.ts",
