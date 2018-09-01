@@ -11,7 +11,7 @@ This is the MakeCode Package for the OC05 xChip.
 
 ## Blocks
 
-* ### init
+### init
 ```typescript
 init(chipi2cAddress: number, frequency: number)
 ```
@@ -19,13 +19,14 @@ Configures the OC05 to prepare it for use with a servo
 * chipI2cAddress: i2c address of the PCA9685
 * frequency     : frequency (40-1000) in hertz to run the clock cycle at
 
-* ### reset
+### reset
 ```typescript
 reset(chipi2cAddress: number)
 ```
 Resets PCA9685 and retains the frequency. All outputs turned off.
+* chipI2cAddress: i2c address of the PCA9685
 
-* ### setServoPosition
+### setServoPosition
 
 ```typescript
 setServoPosition(servoChannel: number, degrees: number, chipi2cAddress: number)
@@ -35,13 +36,13 @@ Positions a servo on the selected channel a desired degree of rotation.
 * degrees: desired degree of rotation
 * chipI2cAddress: i2c address of the PCA9685
 
-* ### setCRServoPosition
+### setCRServoPosition
 
 ```typescript
 setCRServoPosition()
 ```
 
-* ### setServoLimits
+### setServoLimits
 ```typescript
 setServoLimits()
 ```
