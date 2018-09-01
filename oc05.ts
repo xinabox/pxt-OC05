@@ -1,13 +1,13 @@
-// OC05
-//
-// % weight=90 color=#000000 icon="\uf085"
-//
+/**
+ * OC05 Servo Driver
+ */
+//*% weight=90 color=#000000 icon="\uf085"
 namespace OC05 {
     const PCA9685_I2C_ADDRESS = 0x78
     const PCA9685_PRESCALE = 0xFE
     const PCA9685_MODE1 = 0x00
     const modeRegister1Default = 0x01
-    const modeRegister2 = 0x01
+    const PCA9685_MODE2 = 0x01
     const modeRegister2Default = 0x04
     const PCA9685_SLEEP = modeRegister1Default | 0x10;
     const PCA9685_WAKE = modeRegister1Default & 0xEF;
@@ -22,6 +22,7 @@ namespace OC05 {
     const PCA9685_CHAN8_OFF_H = 0x29
 
     export enum PinNum {
+        Pin0 = 0,
         Pin1 = 1,
         Pin2 = 2,
         Pin3 = 3,
@@ -29,7 +30,6 @@ namespace OC05 {
         Pin5 = 5,
         Pin6 = 6,
         Pin7 = 7,
-        Pin8 = 8,
     }
 
     export enum ServoNum {
@@ -121,16 +121,6 @@ namespace OC05 {
         return (25000000 / (freq * 4096)) - 1;
     }
 
-    function stripHexPrefix(str: string): string {
-        if (str.length === 2) {
-            return str
-        }
-        if (str.substr(0, 2) === '0x') {
-            return str.substr(-2, 2)
-        }
-        return str
-    }
-
     function write(chipAddress: number, register: number, value: number): void {
         const buffer = pins.createBuffer(2)
         buffer[0] = register
@@ -157,14 +147,14 @@ namespace OC05 {
 
     /**
      * Used to set the pulse range (0-4095) of a given pin on the PCA9685
-     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
-     * @param pinNumber The pin number (0-15) to set the pulse range on
+     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 120
+     * @param pinNumber The pin number (1-8) to set the pulse range on
      * @param onStep The range offset (0-4095) to turn the signal on
      * @param offStep The range offset (0-4095) to turn the signal off
      */
     //% block advanced=true
-    export function setPinPulseRange(pinNumber: PinNum = 0, onStep: number = 0, offStep: number = 2048, chipAddress: number = 0x40): void {
-        pinNumber = Math.max(0, Math.min(15, pinNumber))
+    export function setPinPulseRange(pinNumber: PinNum = 0, onStep: number = 0, offStep: number = 2048, chipAddress: number = PCA9685_I2C_ADDRESS): void {
+        pinNumber = Math.max(0, Math.min(7, pinNumber))
         const buffer2 = pins.createBuffer(2)
         const pinOffset = 4 * pinNumber
         onStep = Math.max(0, Math.min(4095, onStep))
@@ -195,14 +185,14 @@ namespace OC05 {
 
     /**
      * Used to move the given servo to the specified degrees (0-180) connected to the PCA9685
-     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
-     * @param servoNum The number (1-16) of the servo to move
+     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 120
+     * @param servoNum The number (1-8) of the servo to move
      * @param degrees The degrees (0-180) to move the servo to
      */
     //% block
     export function setServoPosition(servoNum: ServoNum = 1, degrees: number, chipAddress: number = PCA9685_I2C_ADDRESS): void {
         const chip2 = getChipConfig(chipAddress)
-        servoNum = Math.max(1, Math.min(16, servoNum))
+        servoNum = Math.max(1, Math.min(8, servoNum))
         degrees = Math.max(0, Math.min(180, degrees))
         const servo: ServoConfig = chip2.servos[servoNum - 1]
         const pwm = degrees180ToPWM(chip2.freq, degrees, servo.minOffset, servo.maxOffset)
@@ -212,15 +202,15 @@ namespace OC05 {
 
     /**
      * Used to set the rotation speed of a continous rotation servo from -100% to 100%
-     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
-     * @param servoNum The number (1-16) of the servo to move
+     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 120
+     * @param servoNum The number (1-8) of the servo to move
      * @param speed [-100-100] The speed (-100-100) to turn the servo at
      */
     //% block
     export function setCRServoPosition(servoNum: ServoNum = 1, speed: number, chipAddress: number = PCA9685_I2C_ADDRESS): void {
         const chip3 = getChipConfig(chipAddress)
         const freq = chip3.freq
-        servoNum = Math.max(1, Math.min(16, servoNum))
+        servoNum = Math.max(1, Math.min(8, servoNum))
         const servo2: ServoConfig = chip3.servos[servoNum - 1]
         const offsetStart = calcFreqOffset(freq, servo2.minOffset)
         const offsetMid = calcFreqOffset(freq, servo2.midOffset)
@@ -239,8 +229,8 @@ namespace OC05 {
 
     /**
      * Used to set the range in centiseconds (milliseconds * 10) for the pulse width to control the connected servo
-     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
-     * @param servoNum The number (1-16) of the servo to move; eg: 1
+     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 120
+     * @param servoNum The number (1-8) of the servo to move; eg: 1
      * @param minTimeCs The minimum centiseconds (0-1000) to turn the servo on; eg: 5
      * @param maxTimeCs The maximum centiseconds (0-1000) to leave the servo on for; eg: 25
      * @param midTimeCs The mid (90 degree for regular or off position if continuous rotation) for the servo; eg: 15
@@ -248,7 +238,7 @@ namespace OC05 {
     //% block advanced=true
     export function setServoLimits(servoNum: ServoNum = 1, minTimeCs: number = 5, maxTimeCs: number = 2.5, midTimeCs: number = -1, chipAddress: number = PCA9685_I2C_ADDRESS): void {
         const chip4 = getChipConfig(chipAddress)
-        servoNum = Math.max(1, Math.min(16, servoNum))
+        servoNum = Math.max(1, Math.min(8, servoNum))
         minTimeCs = Math.max(0, minTimeCs)
         maxTimeCs = Math.max(0, maxTimeCs)
         const servo3: ServoConfig = chip4.servos[servoNum - 1]
@@ -258,33 +248,28 @@ namespace OC05 {
 
     /**
      * Used to setup the chip, will cause the chip to do a full reset and turn off all outputs.
-     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
+     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 120
      * @param freq [40-1000] Frequency (40-1000) in hertz to run the clock cycle at; eg: 50
      */
-    //% block advanced=true
+    //% block
     export function init(chipAddress: number = PCA9685_I2C_ADDRESS, newFreq: number = 50) {
         const buf = pins.createBuffer(2)
         const freq2 = (newFreq > 1000 ? 1000 : (newFreq < 40 ? 40 : newFreq))
         const prescaler = calcFreqPrescaler(freq2)
-
         write(chipAddress, PCA9685_MODE1, PCA9685_SLEEP)
-
         write(chipAddress, PCA9685_PRESCALE, prescaler)
-
         write(chipAddress, PCA9685_ALLON_L, 0x00)
         write(chipAddress, PCA9685_ALLON_H, 0x00)
         write(chipAddress, PCA9685_ALLOFF_L, 0x00)
         write(chipAddress, PCA9685_ALLOFF_H, 0x00)
-
         write(chipAddress, PCA9685_MODE1, PCA9685_WAKE)
-
         control.waitMicros(1000)
         write(chipAddress, PCA9685_MODE1, PCA9685_RESTART)
     }
 
     /**
      * Used to reset the chip, will cause the chip to do a full reset and turn off all outputs.
-     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 64
+     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 120
      */
     //% block
     export function reset(chipAddress: number = PCA9685_I2C_ADDRESS): void {
