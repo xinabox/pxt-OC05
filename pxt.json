@@ -1,13 +1,17 @@
 {
     "name": "pxt-OC05",
+    "version": "0.0.1",
+    "description": "MakeCode Package for the ☒OC05",
+    "license": "MIT",
     "dependencies": {
         "core": "*",
         "radio": "*"
     },
-    "description": "MakeCode Package for the OC05 xChip",
+    
     "files": [
         "main.blocks",
         "oc05.ts",
         "README.md"
-    ]
+    ],
+    "public": true
 }
