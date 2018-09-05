@@ -1,7 +1,7 @@
 /**
  * OC05 Servo Driver
  */
-//*% weight=90 color=#000000 icon="\uf085"
+//*% weight=99 color=#000000 icon="\uf085"
 namespace OC05 {
     const PCA9685_I2C_ADDRESS = 0x78
     const PCA9685_PRESCALE = 0xFE
