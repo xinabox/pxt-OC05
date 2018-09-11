@@ -4,8 +4,7 @@
     "description": "MakeCode Package for the ☒OC05",
     "license": "MIT",
     "dependencies": {
-        "core": "*",
-        "radio": "*"
+        "core": "*"
     },
     
     "files": [
