@@ -169,15 +169,7 @@ namespace OC05 {
         return ((offset * 1000) / (1000 / freq) * 4096) / 10000
     }
 
-    /**
-     * Used to set the pulse range (0-4095) of a given pin on the PCA9685
-     * @param pinNumber The pin number (1-8) to set the pulse range on
-     * @param onStep The range offset (0-4095) to turn the signal on
-     * @param offStep The range offset (0-4095) to turn the signal off
-     */
-    //% block
-    //% group="Configuration"
-    export function setPinPulseRange(pinNumber: PinNum = 0, onStep: number = 0, offStep: number = 2048, chipAddress: number = PCA9685_I2C_ADDRESS): void {
+    function setPinPulseRange(pinNumber: PinNum = 0, onStep: number = 0, offStep: number = 2048, chipAddress: number = PCA9685_I2C_ADDRESS): void {
         pinNumber = Math.max(0, Math.min(7, pinNumber))
         const buffer2 = pins.createBuffer(2)
         const pinOffset = 4 * pinNumber
@@ -250,17 +242,18 @@ namespace OC05 {
     }
 
     /**
-     * Used to set the range in centiseconds (milliseconds * 10) for the pulse width to control the connected servo
-     * @param chipAddress [64-125] The I2C address of your PCA9685; eg: 120
-     * @param servoNum The number (1-8) of the servo to move; eg: 1
-     * @param minTimeCs The minimum centiseconds (0-1000) to turn the servo on; eg: 5
-     * @param maxTimeCs The maximum centiseconds (0-1000) to leave the servo on for; eg: 25
-     * @param midTimeCs The mid (90 degree for regular or off position if continuous rotation) for the servo; eg: 15
+     * Used to set the range in degrees to control the connected servo
      */
-    //% block
+    //% block= "OC05 set servo %servoNum range from %minimum to %maximum"
+    //% minimum.defl=0 maximum.defl=180
+    //% servoNum.defl=1
     //% group="Configuration"
-    export function setServoLimits(servoNum: ServoNum = 1, minTimeCs: number = 5, maxTimeCs: number = 2.5, midTimeCs: number = -1, chipAddress: number = PCA9685_I2C_ADDRESS): void {
-        const chip4 = getChipConfig(chipAddress)
+    export function setServoLimits(servoNum: ServoNum = 1, minimum: number = 5, maximum: number = 25): void {
+
+        let minTimeCs: number = Math.map(minimum, 0, 180, 5, 25)
+        let maxTimeCs: number = Math.map(maximum, 0, 180, 5, 25)
+        let midTimeCs: number = 15
+        const chip4 = getChipConfig(PCA9685_I2C_ADDRESS)
         servoNum = Math.max(1, Math.min(8, servoNum))
         minTimeCs = Math.max(0, minTimeCs)
         maxTimeCs = Math.max(0, maxTimeCs)
