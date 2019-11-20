@@ -209,10 +209,9 @@ namespace OC05 {
 
     /**
      * Used to move the given servo to the specified degrees (0-180) connected to the PCA9685
-     * @param servoNum The number (1-8) of the servo to move
-     * @param degrees The degrees (0-180) to move the servo to
      */
-    //% block="OC05 set servo %servoNum to %degrees"
+    //% block="OC05 set servo %servoNum to %degrees degrees"
+    //% servoNum.defl=1 degrees.defl=90 degrees.min=0 degrees.max=180
     //% group="Positional"
     export function setServoPosition(servoNum: ServoNum = 1, degrees: number): void {
         const chip2 = getChipConfig(PCA9685_I2C_ADDRESS)
@@ -228,6 +227,7 @@ namespace OC05 {
      * Used to set the rotation speed of a continous rotation servo from -100% to 100%
      */
     //% block="OC05 continuous servo %servoNum run at speed %speed| %"
+    //% servoNum.defl=1 speed.defl=50 speed.min=-100 speed.max=100
     //% group="Continuous"
     export function setCRServoPosition(servoNum: ServoNum = 1, speed: number): void {
         const chip3 = getChipConfig(PCA9685_I2C_ADDRESS)
