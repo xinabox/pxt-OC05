@@ -241,6 +241,26 @@ namespace OC05 {
         return setPinPulseRange(servo2.pinNumber, 0, pwm2, PCA9685_I2C_ADDRESS)
     }
 
+
+    /**
+     * Used to set the rotation speed of a continous rotation servo from -100% to 100%
+    */
+    //% block="OC05 stop servo %servo"
+    //% servoNum.defl=1
+    //% group="Continuous"
+    export function stopServo(servoNum: ServoNum = 1): void {
+        const chip3 = getChipConfig(PCA9685_I2C_ADDRESS)
+        const freq = chip3.freq
+        servoNum = Math.max(1, Math.min(8, servoNum))
+        const servo2: ServoConfig = chip3.servos[servoNum - 1]
+        const offsetStart = calcFreqOffset(freq, servo2.minOffset)
+        const offsetMid = calcFreqOffset(freq, servo2.midOffset)
+        const offsetEnd = calcFreqOffset(freq, servo2.maxOffset)
+
+        return setPinPulseRange(servo2.pinNumber, 0, offsetMid, PCA9685_I2C_ADDRESS)
+
+    }
+
     /**
      * Used to set the range in degrees to control the connected servo
      */
