@@ -8,7 +8,6 @@
     },
     
     "files": [
-        "main.blocks",
         "oc05.ts",
         "README.md"
     ],
