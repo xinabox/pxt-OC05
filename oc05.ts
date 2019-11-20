@@ -244,7 +244,7 @@ namespace OC05 {
     /**
      * Used to set the range in degrees to control the connected servo
      */
-    //% block= "OC05 set servo %servoNum range from %minimum to %maximum"
+    //% block="OC05 set servo %servoNum range from %minimum to %maximum"
     //% minimum.defl=0 maximum.defl=180
     //% servoNum.defl=1
     //% group="Configuration"
