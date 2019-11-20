@@ -6,10 +6,10 @@
     "dependencies": {
         "core": "*"
     },
-    
     "files": [
         "oc05.ts",
         "README.md"
     ],
-    "public": true
+    "public": true,
+    "preferredEditor": "tsprj"
 }
