@@ -212,7 +212,7 @@ namespace OC05 {
      * @param servoNum The number (1-8) of the servo to move
      * @param degrees The degrees (0-180) to move the servo to
      */
-    //% block
+    //% block="OC05 set servo %servoNum to %degrees"
     //% group="Positional"
     export function setServoPosition(servoNum: ServoNum = 1, degrees: number): void {
         const chip2 = getChipConfig(PCA9685_I2C_ADDRESS)
@@ -229,7 +229,7 @@ namespace OC05 {
      * @param servoNum The number (1-8) of the servo to move
      * @param speed [-100-100] The speed (-100-100) to turn the servo at
      */
-    //% block
+    //% block="OC05 continuous servo %servoNum run at speed %speed| %"
     //% group="Continuous"
     export function setCRServoPosition(servoNum: ServoNum = 1, speed: number): void {
         const chip3 = getChipConfig(PCA9685_I2C_ADDRESS)
