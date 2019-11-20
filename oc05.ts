@@ -243,7 +243,7 @@ namespace OC05 {
 
 
     /**
-     * Used to set the rotation speed of a continous rotation servo from -100% to 100%
+     * Used to stop continuous servo motor at current position
     */
     //% block="OC05 stop servo %servo"
     //% servoNum.defl=1
