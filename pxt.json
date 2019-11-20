@@ -1,6 +1,6 @@
 {
     "name": "pxt-OC05",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "description": "MakeCode Package for the ☒OC05",
     "license": "MIT",
     "dependencies": {
