@@ -175,7 +175,7 @@ namespace OC05 {
      * @param onStep The range offset (0-4095) to turn the signal on
      * @param offStep The range offset (0-4095) to turn the signal off
      */
-    // group="Configuration"
+    //% group="Configuration"
     export function setPinPulseRange(pinNumber: PinNum = 0, onStep: number = 0, offStep: number = 2048, chipAddress: number = PCA9685_I2C_ADDRESS): void {
         pinNumber = Math.max(0, Math.min(7, pinNumber))
         const buffer2 = pins.createBuffer(2)
@@ -258,7 +258,7 @@ namespace OC05 {
      * @param maxTimeCs The maximum centiseconds (0-1000) to leave the servo on for; eg: 25
      * @param midTimeCs The mid (90 degree for regular or off position if continuous rotation) for the servo; eg: 15
      */
-    //% group="Cofiguration"
+    //% group="Configuration"
     export function setServoLimits(servoNum: ServoNum = 1, minTimeCs: number = 5, maxTimeCs: number = 2.5, midTimeCs: number = -1, chipAddress: number = PCA9685_I2C_ADDRESS): void {
         const chip4 = getChipConfig(chipAddress)
         servoNum = Math.max(1, Math.min(8, servoNum))
