@@ -226,8 +226,6 @@ namespace OC05 {
 
     /**
      * Used to set the rotation speed of a continous rotation servo from -100% to 100%
-     * @param servoNum The number (1-8) of the servo to move
-     * @param speed [-100-100] The speed (-100-100) to turn the servo at
      */
     //% block="OC05 continuous servo %servoNum run at speed %speed| %"
     //% group="Continuous"
