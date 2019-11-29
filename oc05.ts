@@ -246,9 +246,9 @@ namespace OC05 {
      * Used to stop continuous servo motor at current position
     */
     //% block="OC05 stop servo %servo"
-    //% servoNum.defl=1
+    //% servoNum.defl=OC05.ServoNum.Servo1
     //% group="Continuous"
-    export function stopServo(servoNum: ServoNum = 1): void {
+    export function stopServo(servoNum: ServoNum): void {
         const chip3 = getChipConfig(PCA9685_I2C_ADDRESS)
         const freq = chip3.freq
         servoNum = Math.max(1, Math.min(8, servoNum))
