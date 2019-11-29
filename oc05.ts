@@ -219,9 +219,9 @@ namespace OC05 {
      * Used to set the rotation speed of a continous rotation servo from -100% to 100%
      */
     //% block="OC05 continuous servo %servoNum run at speed %speed| %"
-    //% servoNum.defl=1 speed.defl=50 speed.min=-100 speed.max=100
+    //% servoNum.defl=OC05.ServoNum.Servo1 speed.defl=50 speed.min=-100 speed.max=100
     //% group="Continuous"
-    export function setCRServoPosition(servoNum: ServoNum = 1, speed: number): void {
+    export function setCRServoPosition(servoNum: ServoNum, speed: number): void {
         const chip3 = getChipConfig(PCA9685_I2C_ADDRESS)
         const freq = chip3.freq
         servoNum = Math.max(1, Math.min(8, servoNum))
@@ -266,9 +266,9 @@ namespace OC05 {
      */
     //% block="OC05 set servo %servoNum range from %minimum to %maximum"
     //% minimum.defl=0 maximum.defl=180
-    //% servoNum.defl=1
+    //% servoNum.defl=OC05.ServoNum.Servo1
     //% group="Configuration"
-    export function setServoLimits(servoNum: ServoNum = 1, minimum: number = 5, maximum: number = 25): void {
+    export function setServoLimits(servoNum: ServoNum, minimum: number, maximum: number): void {
 
         let minTimeCs: number = Math.map(minimum, 0, 180, 5, 25)
         let maxTimeCs: number = Math.map(maximum, 0, 180, 5, 25)
