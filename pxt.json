@@ -1,16 +1,15 @@
 {
     "name": "pxt-OC05",
-    "version": "0.0.1",
+    "version": "0.0.18",
     "description": "MakeCode Package for the ☒OC05",
     "license": "MIT",
     "dependencies": {
         "core": "*"
     },
-    
     "files": [
-        "main.blocks",
         "oc05.ts",
         "README.md"
     ],
-    "public": true
+    "public": true,
+    "preferredEditor": "tsprj"
 }
