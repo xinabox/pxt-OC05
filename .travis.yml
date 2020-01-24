@@ -1,5 +1,5 @@
 before_install:
-  - sudo apt-get -y install libxml2-dev
+  - apt-get -y install libusb-1.0-0-dev libudev-dev
 language: node_js
 node_js:
     - "13.3.0"
