@@ -4,8 +4,7 @@
     "description": "XinaBox OC05 Servo Controller",
     "license": "MIT",
     "dependencies": {
-        "core": "*",
-        "xinabox-cs11": "*"
+        "core": "*"
     },
     "files": [
         "oc05.ts",
