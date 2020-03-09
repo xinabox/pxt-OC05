@@ -1,3 +1,8 @@
+[![GitHub Issues](https://img.shields.io/github/issues/xinabox/pxt-OC05.svg)](https://github.com/xinabox/pxt-OC05/issues) 
+![GitHub Commit](https://img.shields.io/github/last-commit/xinabox/pxt-OC05) 
+![Maintained](https://img.shields.io/maintenance/yes/2020) 
+![Build status badge](https://github.com/xinabox/pxt-OC05/workflows/maker/badge.svg)
+![Build status badge](https://github.com/xinabox/pxt-OC05/workflows/microbit/badge.svg)
 # pxt-OC05
 
 This is the MakeCode Package for the OC05 xChip.
